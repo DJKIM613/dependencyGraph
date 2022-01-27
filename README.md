@@ -10,6 +10,6 @@ make all
 
 ## Structure
 
-![structure](./Untitled%20Diagram.drawio.png)
+![structure](./Untitled Diagram.drawio.png)
 
 
