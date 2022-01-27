@@ -25,6 +25,11 @@ void functionNode::addAdjacentNode(functionNode *nodePtr) {
     this->mAdjacentNodePtrs.push_back(nodePtr);
 }
 
+/*
+ * decrease 1 on adjacent node
+ * check adjacent node's indegree is 0
+ * if it is true, add adjacent node to threadPool
+ * */
 void functionNode::postProcess() {
     for (auto nodePtr: this->mAdjacentNodePtrs) {
         // TODO : maybe... spin_lock is faster than mutex
@@ -55,6 +60,11 @@ void dependencyGraph::make_edge(functionNode *src, functionNode *dst) {
     dst->modifyIndegree(1);
 }
 
+/*
+ * modify numPendingNodes and check the value is 0
+ * to prevent two other access thread modify numPendingNodes and they get numPendingNodes 0 both,
+ * we should do this process after mutex lock
+ */
 void dependencyGraph::modifyNumPendingNodes(int count) {
     // TODO : maybe... spin_lock is faster than mutex
     std::unique_lock<std::mutex> lock;
